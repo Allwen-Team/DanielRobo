@@ -36,9 +36,9 @@ def run(message, matches, chat_id, step):
     response = Message(chat_id)
     res = show_help(0)
     if public_plugins:
-        res.append([InlineKeyboardButton(text='Next ▶️', callback_data='/helpn 1')])
+        res.append([InlineKeyboardButton(text='Next Plugins ▶️', callback_data='/helpn 1')])
     markup = InlineKeyboardMarkup(inline_keyboard=res)
-    response.set_text("Welcome to Siarobo\nSelect One of these Items.", parse_mode="Markdown", reply_markup=markup)
+    response.set_text("Welcome to DaniRobo\nSelect One of these Items.", parse_mode="Markdown", reply_markup=markup)
     return [response]
 
 
@@ -48,22 +48,22 @@ def callback(message, matches, chat_id):
     if data == "/help":
         res = show_help(0)
         if len(public_plugins) > 10:
-            res.append([InlineKeyboardButton(text='Next ▶️', callback_data='/helpn 1')])
+            res.append([InlineKeyboardButton(text='Next Plugins ▶️', callback_data='/helpn 1')])
         markup = InlineKeyboardMarkup(inline_keyboard=res)
         msgid = (chat_id, message['message']['message_id'])
-        return Message(from_id).edit_message(msgid, "Welcome to Siarobo\nSelect One of these Items.",
+        return Message(from_id).edit_message(msgid, "Welcome to DaniRobo\nSelect One of these Items.",
                                              parse_mode="Markdown",
                                              reply_markup=markup)
     elif "/helpn" in data:
         num = int(matches)
         res = show_help(num)
         if len(public_plugins) > (num + 1) * 10 and num != 0:
-            res.append([InlineKeyboardButton(text='◀️ Previous', callback_data='/helpn ' + str(num - 1)),
-                        InlineKeyboardButton(text='Next ▶️', callback_data='/helpn ' + str(num + 1))])
+            res.append([InlineKeyboardButton(text='◀️ Last Plugins', callback_data='/helpn ' + str(num - 1)),
+                        InlineKeyboardButton(text='Next Plugins ▶️', callback_data='/helpn ' + str(num + 1))])
         elif len(public_plugins) > (num + 1) * 10:
-            res.append([InlineKeyboardButton(text='Next ▶️', callback_data='/helpn ' + str(num + 1))])
+            res.append([InlineKeyboardButton(text='Next Plugins ▶️', callback_data='/helpn ' + str(num + 1))])
         elif num != 0:
-            res.append([InlineKeyboardButton(text='◀️ Previous', callback_data='/helpn ' + str(num - 1))])
+            res.append([InlineKeyboardButton(text='◀ Last Plugins', callback_data='/helpn ' + str(num - 1))])
         markup = InlineKeyboardMarkup(inline_keyboard=res)
         msgid = (chat_id, message['message']['message_id'])
         return Message(from_id).edit_message(msgid, "Welcome to Siarobo\nSelect One of these Items.",
